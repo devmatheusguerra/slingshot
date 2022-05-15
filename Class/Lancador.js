@@ -18,15 +18,15 @@ class Lancador {
 
     this.x = variables.x
     this.y = variables.y
-    this.velocidade = variables.velocidade
     this.angulo = variables.angulo
     this.radianos = (Math.PI * this.angulo) / 180
-    this.gravidade = variables.gravidade
     this.escala = variables.escala
-
+    this.velocidade = variables.velocidade * this.escala
+    this.gravidade = variables.gravidade * this.escala
+    this.fps = variables.fps || 60
     // Variáveis de controle (DEPENDENTES DAS VARIÁVEIS ACIMA)
-    this.vel_x = Math.cos(this.radianos) * this.velocidade * this.escala
-    this.vel_y = Math.sin(this.radianos) * this.velocidade * this.escala
+    this.vel_x = Math.cos(this.radianos) * this.velocidade
+    this.vel_y = Math.sin(this.radianos) * this.velocidade
     this.tempo_total_lancamento =
       (2 * this.velocidade * Math.sin(this.radianos)) / this.gravidade
     this.altura_maxima =
@@ -53,40 +53,49 @@ class Lancador {
   }
 
   // Métodos
+  posicao_x_aos (tempo) {
+    return this.x + this.vel_x * tempo
+  }
+
+  posicao_y_aos (tempo) {
+    return this.y + this.vel_y * tempo - (this.gravidade * tempo ** 2) / 2
+  }
+
   lancar () {
+    // Criando o projétil
     const objeto = new Objeto({
       width: 30,
       height: 30,
-      velocidade: this.velocidade
-    });
+      velocidade: this.velocidade / this.escala
+    })
 
-    objeto.setBall({ color: '#F00' });
-    objeto.setPosition({ x: this.x, y: this.y });
-    objeto.render();
-    objeto.rotate();
+    objeto.setImage('./bola.png')
+    objeto.setPosition({ x: this.x, y: this.y })
+    objeto.render()
+    objeto.rotate()
 
-    // Cria um intervalo para atualizar a posição do objeto
-    const frames_total = this.tempo_total_lancamento * 50;
-    let frame = 0;
-
-    const movimento = setInterval(() => {
-
-        this.x = (this.x + this.vel_x) * this.escala;
-
-        this.y = (this.y + (this.vel_y)) * this.escala;
-
-        this.vel_y -= this.gravidade;
-
-        objeto.setPosition({ x: this.x, y: this.y });
-        
-        frame++;
-        if(frame >= frames_total)
-        {
-            objeto.stopRotate();
-            clearInterval(movimento);
-            return;
-        }
-    }, 20);
-
+    // Criando o cenário
+    let cenario = new Cenario()
+    cenario.setBackground('./scene.png')
+    // Criando o timer
+    const tempo_em_milissegundos = this.tempo_total_lancamento * 1000
+    console.log(this.tempo_total_lancamento)
+    this.current_time = 0
+    this.timer = setInterval(() => {
+      this.current_time += 1000 / this.fps
+      if (this.current_time >= tempo_em_milissegundos) {
+        clearInterval(this.timer)
+        objeto.stopRotate()
+        objeto.setPosition({ y: 0 });
+        cenario.atualizarPosicao(false, 0)
+        cenario.atualizarCron(this.current_time / 1000)
+      } else {
+        let x = this.posicao_x_aos(this.current_time / 1000)
+        let y = this.posicao_y_aos(this.current_time / 1000)
+        objeto.setPosition({ x, y })
+        cenario.atualizarCron(this.current_time / 1000)
+        cenario.atualizarPosicao(x/ this.escala, y/ this.escala)
+      }
+    }, 1000 / this.fps);
   }
 }

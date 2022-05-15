@@ -14,7 +14,8 @@ class Objeto {
         }
         
         .rotate {
-            animation: rotate ${velocidade != undefined ? 20 / velocidade  : 20/10}s linear infinite;
+            transition: all .01s linear;
+            animation: rotate ${velocidade != undefined ? 25 / velocidade  : 25/10}s linear infinite;
         }
         `;
 
@@ -47,8 +48,10 @@ class Objeto {
 
     setPosition({x, y})
     {
-        this.object.style.left = x + 'px';
-        this.object.style.bottom = y + 'px';
+        if(x != undefined)
+            this.object.style.left = x + 'px';
+        if(y != undefined)
+            this.object.style.bottom = y + 'px';
     }
 
     render()

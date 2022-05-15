@@ -5,21 +5,55 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <style>
+            .regua {
+        width: 2500%;
+        height: 5px;
+        background-color: black;
+        position: absolute;
+        bottom: 5px;
+        overflow: visible;
+        opacity: 0.1;
+        transition: all 0.3s;
+        cursor: pointer;
+      }
+
+      .regua:hover {
+        opacity: 1;
+      }
+
+      .marker {
+        position: absolute;
+        bottom: 1px;
+        width: 5px;
+        height: 11px;
+        background-color: rgba(0, 0, 0, 1);
+      }
+
+      .marker::after {
+        content: attr(distance);
+        position: absolute;
+        bottom: -20px;
+        width: max-content;
+        left: -100%;
+        color: black;
+        font-weight: bolder;
+      }
+    </style>
   </head>
-  <body>
+  <body style="width: 30000vw !important; position: absolute; height: 100vh;">
+    <script src="./Class/Cenario.js"></script>
     <script src="./Class/Lancador.js"></script>
     <script src="./Class/Objeto.js"></script>
     <script>
       var lancador = new Lancador({
         x: 0,
         y: 0,
-        velocidade: 10,
+        velocidade: 12,
         angulo: 45,
         gravidade: 9.81,
-        escala: 10
+        escala: 100
       });
-
-      console.log(lancador.velocidades);
 
       lancador.lancar();
     </script>
