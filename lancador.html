@@ -4,9 +4,15 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Lançador</title>
     <style>
-            .regua {
+      document,
+      body {
+        margin: 0;
+        padding: 0;
+        scroll-behavior: smooth;
+      }
+      .regua {
         width: 2500%;
         height: 5px;
         background-color: black;
@@ -39,23 +45,41 @@
         color: black;
         font-weight: bolder;
       }
+
+      body {
+        width: 30000vw;
+        position: absolute;
+        height: 100vh;
+      }
     </style>
   </head>
-  <body style="width: 30000vw !important; position: absolute; height: 100vh;">
+  <body>
     <script src="./Class/Cenario.js"></script>
     <script src="./Class/Lancador.js"></script>
     <script src="./Class/Objeto.js"></script>
     <script>
-      var lancador = new Lancador({
-        x: 0,
-        y: 0,
-        velocidade: 12,
-        angulo: 45,
-        gravidade: 9.81,
-        escala: 100
-      });
+      document.addEventListener('DOMContentLoaded', () => {
+        // Get hash from URL
+        let hash = window.location.hash.substring(1)
+        // Convert Json to Object
+        let obj = JSON.parse(atob(hash))
+        // Add x to obj
+        obj.x = 0
+        // Create Lancador
+        let l1 = new Lancador(obj)
+        l1.lancar()
+        let tempo = l1.tempo * 1000
+        const intervalo = setInterval(() => {
+          document
+            .querySelector('#projetil')
+            .scrollIntoView();
+            tempo -= 20;
 
-      lancador.lancar();
+          if (tempo <= 0) {
+            clearInterval(intervalo);
+          }
+        }, 20)
+      })
     </script>
   </body>
 </html>

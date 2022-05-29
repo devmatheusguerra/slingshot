@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Configurar Lançamento</title>
+    <link
+      href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      .form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+
+      .form .f-row {
+        width: clamp(200px, 40%, 500px);
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-between;
+        margin: 2px 0;
+      }
+
+      .form .f-row button {
+        align-self: center;
+        cursor: pointer;
+        margin: 30px 0;
+      }
+
+      .form .f-icon {
+        width: 100%;
+        font-size: 20px;
+      }
+
+      .form .f-input {
+        position: relative;
+        width: 100%;
+      }
+
+      .form .f-input input {
+        position: relative;
+        border: solid 1px rgba(0, 0, 0, 0.5);
+        border-radius: 5px;
+        padding: 5px 5px;
+        background-color: transparent;
+        outline: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      input[type='range'] {
+        position: relative;
+        overflow: visible;
+        height: 26px;
+        -webkit-appearance: none;
+        margin: 10px 0;
+        width: 100%;
+        border: 0 !important;
+      }
+      input[type='range']:focus {
+        outline: none;
+      }
+
+      input[type='range']::after {
+        content: attr(value) attr(medida);
+        position: absolute;
+        width: 55px;
+        height: 20px;
+        border-radius: 7px;
+        background-color: #7a909b;
+        bottom: 2px;
+        left: -18px;
+        transform: translate(-50%, 0);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        color: #fff;
+      }
+
+      input[type='range']::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 13px;
+        cursor: pointer;
+        animate: 0.2s;
+        box-shadow: 0px 0px 0px #000000;
+        background: #34a0b5;
+        border-radius: 25px;
+        border: 0px solid #000101;
+      }
+      input[type='range']::-webkit-slider-thumb {
+        box-shadow: 0px 0px 0px #000000;
+        border: 0px solid #000000;
+        height: 20px;
+        width: 39px;
+        border-radius: 7px;
+        background: #1e4d65;
+        cursor: pointer;
+        -webkit-appearance: none;
+        margin-top: -3.5px;
+      }
+      input[type='range']:focus::-webkit-slider-runnable-track {
+        background: #34a0b5;
+      }
+      input[type='range']::-moz-range-track {
+        width: 100%;
+        height: 13px;
+        cursor: pointer;
+        animate: 0.2s;
+        box-shadow: 0px 0px 0px #000000;
+        background: #34a0b5;
+        border-radius: 25px;
+        border: 0px solid #000101;
+      }
+      input[type='range']::-moz-range-thumb {
+        box-shadow: 0px 0px 0px #000000;
+        border: 0px solid #000000;
+        height: 20px;
+        width: 39px;
+        border-radius: 7px;
+        background: #1e4d65;
+        cursor: pointer;
+      }
+      input[type='range']::-ms-track {
+        width: 100%;
+        height: 13px;
+        cursor: pointer;
+        animate: 0.2s;
+        background: transparent;
+        border-color: transparent;
+        color: transparent;
+      }
+      input[type='range']::-ms-fill-lower {
+        background: #34a0b5;
+        border: 0px solid #000101;
+        border-radius: 50px;
+        box-shadow: 0px 0px 0px #000000;
+      }
+      input[type='range']::-ms-fill-upper {
+        background: #34a0b5;
+        border: 0px solid #000101;
+        border-radius: 50px;
+        box-shadow: 0px 0px 0px #000000;
+      }
+      input[type='range']::-ms-thumb {
+        margin-top: 1px;
+        box-shadow: 0px 0px 0px #000000;
+        border: 0px solid #000000;
+        height: 20px;
+        width: 39px;
+        border-radius: 7px;
+        background: #1e4d65;
+        cursor: pointer;
+      }
+      input[type='range']:focus::-ms-fill-lower {
+        background: #34a0b5;
+      }
+      input[type='range']:focus::-ms-fill-upper {
+        background: #34a0b5;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>
+      Configurar Lançamento
+    </h1>
+
+    <div class="form">  
+
+      <div class="f-row">
+        <div class="f-icon"><i class="bx bx-run"></i> Velocidade</div>
+        <div class="f-input">
+          <input
+            medida=" m/s"
+            value="10"
+            type="range"
+            min="1"
+            step="1"
+            max="100"
+          />
+        </div>
+      </div>
+
+      <div class="f-row">
+        <div class="f-icon"><i class="bx bx-shape-triangle"></i> Ângulo</div>
+        <div class="f-input">
+          <input value="45" medida="°" type="range" min="0" max="90" step="1" />
+        </div>
+      </div>
+
+      <div class="f-row">
+        <div class="f-icon"><i class="bx bx-down-arrow-alt"></i> Gravidade</div>
+        <div class="slider-border f-input float-title" title="Gravidade">
+          <input
+            type="number"
+            min="0"
+            step=".1"
+            placeholder="Gravidade do ambiente em m/s². Ex.: 9.81"
+          />
+        </div>
+      </div>
+
+      <div class="f-row">
+        <button>
+          Gerar Simulação
+        </button>
+      </div>
+    </div>
+
+    <script>
+      setInterval(() => {
+        document.querySelectorAll('input[type=range]').forEach(e => {
+          e.setAttribute('value', e.value)
+        })
+      }, 100)
+
+      document.querySelector('button').onclick = () => {
+        let altura = document.querySelector('input[type=number]').value || 0
+        let velocidade = document.querySelectorAll('input[type=range]')[0].value
+        let angulo = document.querySelectorAll('input[type=range]')[1].value
+        let gravidade =
+          document.querySelector('input[type=number]').value || 9.81
+
+        let json = {
+            x: 0,
+          y: Number(altura),
+          velocidade: Number(velocidade),
+          angulo: Number(angulo),
+          gravidade: Number(gravidade),
+          escala: 100
+        }
+
+        location.href = 'lancador.html#' + btoa(JSON.stringify(json))
+      }
+    </script>
+  </body>
+</html>

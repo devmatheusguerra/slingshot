@@ -45,11 +45,11 @@ class Lancador {
   }
 
   get altura () {
-    return this.altura_maxima
+    return this.altura_maxima * 10000
   }
 
   get alcance () {
-    return this.alcance_total
+    return this.alcance_total / this.escala
   }
 
   // Métodos
@@ -69,24 +69,26 @@ class Lancador {
       velocidade: this.velocidade / this.escala
     })
 
-    objeto.setImage('./bola.png')
+    // objeto.setImage('./bola.png')
+    objeto.setBall({ color: '#7B6' })
     objeto.setPosition({ x: this.x, y: this.y })
     objeto.render()
     objeto.rotate()
 
     // Criando o cenário
-    let cenario = new Cenario()
+    let cenario = new Cenario(this)
+    //cenario.setBackgroundSquare();
     cenario.setBackground('./scene.png')
     // Criando o timer
     const tempo_em_milissegundos = this.tempo_total_lancamento * 1000
-    console.log(this.tempo_total_lancamento)
+
     this.current_time = 0
     this.timer = setInterval(() => {
       this.current_time += 1000 / this.fps
       if (this.current_time >= tempo_em_milissegundos) {
         clearInterval(this.timer)
         objeto.stopRotate()
-        objeto.setPosition({ y: 0 });
+        objeto.setPosition({ y: 0 })
         cenario.atualizarPosicao(false, 0)
         cenario.atualizarCron(this.current_time / 1000)
       } else {
@@ -94,8 +96,10 @@ class Lancador {
         let y = this.posicao_y_aos(this.current_time / 1000)
         objeto.setPosition({ x, y })
         cenario.atualizarCron(this.current_time / 1000)
-        cenario.atualizarPosicao(x/ this.escala, y/ this.escala)
+        cenario.atualizarPosicao(x / this.escala, y / this.escala)
       }
-    }, 1000 / this.fps);
+    }, 1000 / this.fps)
+
+    
   }
 }
